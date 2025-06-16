@@ -16,4 +16,18 @@ public class DummyConnectorTest {
             System.out.println("Verticle deployed with Id : " + id);
          testContext.completeNow();}));
     }
+    @Test
+    void testFetchData(Vertx vertx, VertxTestContext testContext) {
+        DummyConnector connector = new DummyConnector();
+
+        connector.fetchData().onComplete(ar -> {
+            if (ar.succeeded()) {
+                System.out.println("Received: " + ar.result());
+                testContext.completeNow();
+            } else {
+                testContext.failNow(ar.cause());
+            }
+        });
+    }
+
 }
